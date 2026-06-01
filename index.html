@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>فرم Fast Life — تجربه‌ت رو با ما در میون بذار</title>
+<style>
+  :root{
+    --bg:#eef0f5; --card:#ffffff; --ink:#1f2937; --muted:#6b7280;
+    --brand:#1e2a52; --brand2:#2c3e72; --brand-soft:#e9ecf5; --line:#e2e5ee;
+    --ring:#c2cbe6; --danger:#dc2626;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:"Vazirmatn","Segoe UI",Tahoma,sans-serif; background:var(--bg); color:var(--ink); line-height:1.8; font-size:16px}
+  .wrap{max-width:640px; margin:0 auto; padding:18px 14px 60px}
+  .hero{background:linear-gradient(135deg,var(--brand),var(--brand2)); color:#fff; border-radius:20px; padding:26px 22px; margin-bottom:18px; box-shadow:0 12px 28px rgba(30,42,82,.25)}
+  .hero h1{margin:0 0 8px; font-size:22px}
+  .hero p{margin:0; opacity:.96; font-size:15.5px}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px 18px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,.03)}
+  .q{margin-bottom:6px}
+  .q + .q{border-top:1px solid var(--line); padding-top:16px; margin-top:16px}
+  .qlabel{font-weight:700; font-size:16.5px; margin-bottom:4px}
+  .qlabel .star{color:var(--danger); font-weight:700}
+  .qhint{font-size:13.5px; color:var(--muted); margin:2px 0 10px}
+  .opts{display:flex; flex-direction:column; gap:8px; margin-top:8px}
+  .opt{display:flex; align-items:center; gap:10px; border:1.5px solid var(--line); border-radius:12px; padding:10px 12px; cursor:pointer; transition:.15s; background:#fff}
+  .opt:hover{border-color:var(--ring); background:#fafdfb}
+  .opt input{accent-color:var(--brand); width:18px; height:18px; flex:0 0 auto; cursor:pointer}
+  .opt.checked{border-color:var(--brand); background:var(--brand-soft)}
+  .opt span{flex:1}
+  .writein{margin-top:8px}
+  .scale{display:flex; gap:8px; justify-content:space-between}
+  .scale label{flex:1; text-align:center; border:1.5px solid var(--line); border-radius:12px; padding:12px 0; cursor:pointer; font-weight:700; transition:.15s; position:relative}
+  .scale label:hover{border-color:var(--ring)}
+  .scale label.checked{border-color:var(--brand); background:var(--brand); color:#fff}
+  .scale input{position:absolute; opacity:0; pointer-events:none}
+  .scaleends{display:flex; justify-content:space-between; font-size:12.5px; color:var(--muted); margin-top:6px}
+  textarea, input[type=text]{width:100%; border:1.5px solid var(--line); border-radius:12px; padding:11px 12px; font-family:inherit; font-size:15.5px; resize:vertical}
+  textarea:focus, input[type=text]:focus{outline:none; border-color:var(--brand)}
+  .secttl{display:flex; align-items:center; gap:10px; margin:2px 0 12px}
+  .secttl .dot{width:10px; height:10px; border-radius:50%}
+  .secttl h2{margin:0; font-size:18px}
+  .err{color:var(--danger); font-size:13px; margin-top:6px; display:none}
+  .q.invalid .err{display:block}
+  .q.invalid .qlabel{color:var(--danger)}
+  .submit{width:100%; background:var(--brand); color:#fff; border:none; border-radius:14px; padding:15px; font-size:17px; font-weight:700; cursor:pointer; font-family:inherit; box-shadow:0 8px 20px rgba(30,42,82,.3)}
+  .submit:hover{background:#162040}
+  .submit:disabled{opacity:.6; cursor:default}
+  .hidden{display:none !important}
+  .topbar{position:sticky; top:0; z-index:5; height:5px; background:#dfe6e3; border-radius:99px; overflow:hidden; margin-bottom:10px}
+  .topbar i{display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--brand),var(--brand2)); transition:width .3s}
+  .thanks{text-align:center; padding:40px 20px}
+  .thanks .em{font-size:48px}
+  .thanks h2{color:var(--brand)}
+  .note{font-size:12.5px; color:var(--muted); text-align:center; margin-top:18px}
+  .formerr{background:#fdeaea; color:#b91c1c; border:1px solid #f5c2c2; border-radius:12px; padding:12px; margin-bottom:14px; display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar" id="topbar"><i id="bar"></i></div>
+
+  <div class="hero" id="hero">
+    <h1>تجربه‌ت رو با ما در میون بذار</h1>
+    <p>هدف ما تحقیق بازاره. هرچی اینجا می‌نویسی پیش ما محفوظه. پس لطفاً صادقانه جواب بده 🙏</p>
+  </div>
+
+  <div id="formerr" class="formerr">چند سوال اجباری هنوز جواب داده نشده. لطفاً موارد قرمزشده رو کامل کن.</div>
+
+  <form id="survey" novalidate>
+
+  <!-- ===== SECTION 0 ===== -->
+  <div class="card">
+    <div class="secttl"><span class="dot" style="background:#475569"></span><h2>چند سوال کوتاه</h2></div>
+
+    <div class="q" data-required="0"><div class="qlabel">جنسیتت چیه؟</div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="Q0.1 جنسیت" value="زن"><span>زن</span></label>
+        <label class="opt"><input type="radio" name="Q0.1 جنسیت" value="مرد"><span>مرد</span></label>
+      </div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">تو کدوم رده سنی هستی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="Q0.2 سن" value="زیر ۱۸"><span>زیر ۱۸</span></label>
+        <label class="opt"><input type="radio" name="Q0.2 سن" value="۱۸ تا ۲۴"><span>۱۸ تا ۲۴</span></label>
+        <label class="opt"><input type="radio" name="Q0.2 سن" value="۲۵ تا ۳۴"><span>۲۵ تا ۳۴</span></label>
+        <label class="opt"><input type="radio" name="Q0.2 سن" value="۳۵ تا ۴۴"><span>۳۵ تا ۴۴</span></label>
+        <label class="opt"><input type="radio" name="Q0.2 سن" value="۴۵ تا ۵۴"><span>۴۵ تا ۵۴</span></label>
+        <label class="opt"><input type="radio" name="Q0.2 سن" value="۵۵ به بالا"><span>۵۵ به بالا</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">الان کجا زندگی می‌کنی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio" id="loc">
+        <label class="opt"><input type="radio" name="Q0.3 محل زندگی" value="ایران"><span>ایران</span></label>
+        <label class="opt"><input type="radio" name="Q0.3 محل زندگی" value="اروپا"><span>اروپا</span></label>
+        <label class="opt"><input type="radio" name="Q0.3 محل زندگی" value="آمریکا یا کانادا"><span>آمریکا یا کانادا</span></label>
+        <label class="opt"><input type="radio" name="Q0.3 محل زندگی" value="استرالیا"><span>استرالیا</span></label>
+        <label class="opt"><input type="radio" name="Q0.3 محل زندگی" value="امارات و کشورهای خلیج فارس"><span>امارات و کشورهای حوزه خلیج فارس</span></label>
+        <label class="opt"><input type="radio" name="Q0.3 محل زندگی" value="ترکیه"><span>ترکیه</span></label>
+        <label class="opt"><input type="radio" name="Q0.3 محل زندگی" value="سایر"><span>سایر</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">وضعیت وزن الانت رو خودت چطور توصیف می‌کنی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="Q0.4 وضعیت وزن" value="راضی‌ام، فقط نگه دارم"><span>راضی‌ام، فقط می‌خوام همینو نگه دارم</span></label>
+        <label class="opt"><input type="radio" name="Q0.4 وضعیت وزن" value="کمی اضافه‌وزن"><span>کمی اضافه‌وزن دارم</span></label>
+        <label class="opt"><input type="radio" name="Q0.4 وضعیت وزن" value="اضافه‌وزن قابل‌توجه"><span>اضافه‌وزن قابل‌توجه دارم</span></label>
+        <label class="opt"><input type="radio" name="Q0.4 وضعیت وزن" value="چاقی شدید"><span>چاقی شدید دارم و برام دغدغه‌ست</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+  </div>
+
+  <!-- ===== KEY ===== -->
+  <div class="card">
+    <div class="secttl"><span class="dot" style="background:var(--brand)"></span><h2>یک سوال مهم</h2></div>
+    <div class="q" data-required="1"><div class="qlabel">تا حالا از آمپول‌های کنترل اشتها و لاغری استفاده کردی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio" id="qkey">
+        <label class="opt"><input type="radio" name="مسیر (Q-KEY)" value="A) الان مصرف می‌کنم" data-path="A"><span>الان دارم یکی از این داروها رو مصرف می‌کنم</span></label>
+        <label class="opt"><input type="radio" name="مسیر (Q-KEY)" value="B) قبلاً مصرف کردم، قطع کردم" data-path="B"><span>قبلاً مصرف کردم، ولی الان قطعش کردم</span></label>
+        <label class="opt"><input type="radio" name="مسیر (Q-KEY)" value="C) فکرشو دارم / قصد شروع" data-path="C"><span>مصرف نکردم، ولی جدی بهش فکر کردم یا قصد دارم شروع کنم</span></label>
+        <label class="opt"><input type="radio" name="مسیر (Q-KEY)" value="D) نمی‌خوام مصرف کنم" data-path="D"><span>مصرف نکردم و تصمیمشو هم ندارم</span></label>
+        <label class="opt"><input type="radio" name="مسیر (Q-KEY)" value="E) بهش فکر نکردم" data-path="E"><span>تا حالا راجع بهشون فکر نکردم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+  </div>
+
+  <!-- ===== PATH A ===== -->
+  <div class="card path hidden" data-path="A">
+    <div class="secttl"><span class="dot" style="background:#2563eb"></span><h2>چند سوال درباره تجربه‌ت با دارو</h2></div>
+
+    <div class="q" data-required="1"><div class="qlabel">الان کدوم دارو رو مصرف می‌کنی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="اوزمپیک"><span>اوزمپیک (Ozempic)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ویگووی"><span>ویگووی (Wegovy)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="مونجارو"><span>مونجارو (Mounjaro)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="زپ‌باند"><span>زپ‌باند (Zepbound)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ساکسندا"><span>ساکسندا (Saxenda)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ویکتوزا"><span>ویکتوزا (Victoza)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ریبلسوس"><span>ریبلسوس / قرص سماگلوتاید (Rybelsus)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ترولیسیتی"><span>ترولیسیتی (Trulicity)</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ملیتاید"><span>ملیتاید</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ماسیزا"><span>ماسیزا</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="ویکیتاید"><span>ویکیتاید</span></label>
+        <label class="opt"><input type="checkbox" name="A1 داروی فعلی" value="اسمشو دقیق نمی‌دونم"><span>اسمشو دقیق نمی‌دونم</span></label>
+      </div>
+      <input class="writein" type="text" name="A1 داروی دیگر" placeholder="اگه داروت تو لیست نبود، اینجا بنویس">
+      <div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="0"><div class="qlabel">دارو رو معمولاً از چه راهی تهیه می‌کنی؟</div>
+      <div class="qhint">این کاملاً محرمانه‌ست و فقط برای شناخت بهتر ماست؛ هر جوابی بدی پیش خودمون می‌مونه.</div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="A2 طرز تهیه" value="نسخه و پیگیری پزشک"><span>نسخه و پیگیری پزشک</span></label>
+        <label class="opt"><input type="radio" name="A2 طرز تهیه" value="کلینیک یا مطب لاغری"><span>کلینیک یا مطب لاغری</span></label>
+        <label class="opt"><input type="radio" name="A2 طرز تهیه" value="داروخانه"><span>داروخانه</span></label>
+        <label class="opt"><input type="radio" name="A2 طرز تهیه" value="فضای مجازی و پیج‌ها"><span>فضای مجازی و پیج‌ها</span></label>
+        <label class="opt"><input type="radio" name="A2 طرز تهیه" value="دوست یا آشنا"><span>دوست یا آشنا</span></label>
+        <label class="opt"><input type="radio" name="A2 طرز تهیه" value="ترجیح می‌دم نگم"><span>ترجیح می‌دم نگم</span></label>
+      </div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چقدر وقته از این دارو استفاده می‌کنی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="A3 مدت استفاده" value="کمتر از یک ماه"><span>کمتر از یک ماه</span></label>
+        <label class="opt"><input type="radio" name="A3 مدت استفاده" value="۱ تا ۳ ماه"><span>۱ تا ۳ ماه</span></label>
+        <label class="opt"><input type="radio" name="A3 مدت استفاده" value="۳ تا ۶ ماه"><span>۳ تا ۶ ماه</span></label>
+        <label class="opt"><input type="radio" name="A3 مدت استفاده" value="۶ ماه تا یک سال"><span>۶ ماه تا یک سال</span></label>
+        <label class="opt"><input type="radio" name="A3 مدت استفاده" value="بیشتر از یک سال"><span>بیشتر از یک سال</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">کنار دارو کدوم کارها رو انجام می‌دی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="A4 کنار دارو" value="از متخصص یا پزشک رژیم گرفتم"><span>از متخصص یا پزشک رژیم گرفتم</span></label>
+        <label class="opt"><input type="checkbox" name="A4 کنار دارو" value="تغذیه‌ام رو خودم جدی‌تر کردم"><span>تغذیه‌ام رو خودم جدی‌تر کردم</span></label>
+        <label class="opt"><input type="checkbox" name="A4 کنار دارو" value="ورزش / تمرین مقاومتی"><span>ورزش / تمرین مقاومتی دارم</span></label>
+        <label class="opt"><input type="checkbox" name="A4 کنار دارو" value="فستینگ می‌کنم"><span>فستینگ می‌کنم</span></label>
+        <label class="opt"><input type="checkbox" name="A4 کنار دارو" value="فقط دارو می‌زنم"><span>فقط دارو می‌زنم و کار خاصی نمی‌کنم</span></label>
+        <label class="opt"><input type="checkbox" name="A4 کنار دارو" value="نمی‌دونم باید چیکار کنم"><span>نمی‌دونم کنار دارو باید چیکار کنم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="0"><div class="qlabel">چه عوارضی داشتی؟ (هرچی تجربه کردی)</div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="A5 عوارض" value="تهوع"><span>تهوع / حالت بد</span></label>
+        <label class="opt"><input type="checkbox" name="A5 عوارض" value="یبوست یا مشکل گوارشی"><span>یبوست یا مشکل گوارشی</span></label>
+        <label class="opt"><input type="checkbox" name="A5 عوارض" value="بی‌حالی"><span>بی‌حالی و کم‌انرژی بودن</span></label>
+        <label class="opt"><input type="checkbox" name="A5 عوارض" value="ریزش مو"><span>ریزش مو</span></label>
+        <label class="opt"><input type="checkbox" name="A5 عوارض" value="افتادگی پوست صورت"><span>افتادگی و شلی پوست صورت</span></label>
+        <label class="opt"><input type="checkbox" name="A5 عوارض" value="تغییر خلق"><span>بی‌حوصلگی یا تغییر خلق</span></label>
+        <label class="opt"><input type="checkbox" name="A5 عوارض" value="هیچ عارضه‌ای نداشتم"><span>هیچ عارضه‌ای نداشتم</span></label>
+      </div>
+      <input class="writein" type="text" name="A5 عارضه دیگر" placeholder="عارضهٔ دیگه‌ای داشتی؟ بنویس"></div>
+
+    <div class="q" data-required="1"><div class="qlabel">نگران کدوم‌ها هستی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="برگشت وزن بعد قطع"><span>برگشت وزن بعد از قطع دارو</span></label>
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="از دست دادن عضله یا شل شدن بدن و صورت"><span>از دست دادن عضله یا شل شدن بدن و صورت</span></label>
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="کمبود پروتئین و تغذیه ضعیف"><span>کمبود پروتئین و تغذیه ضعیف</span></label>
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="عوارض گوارشی"><span>عوارض گوارشی</span></label>
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="وابستگی ذهنی به دارو"><span>وابستگی ذهنی به دارو</span></label>
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="تقلبی بودن دارو"><span>تقلبی بودن دارو</span></label>
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="هزینه"><span>هزینه</span></label>
+        <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="راضی‌ام و نگرانی خاصی ندارم"><span>راضی‌ام و نگرانی خاصی ندارم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">اگه فردا مجبور شی دارو رو قطع کنی، چقدر آماده‌ای وزنت رو حفظ کنی؟ <span class="star">*</span></div>
+      <div class="scale" data-type="radio">
+        <label><input type="radio" name="A7 آمادگی پس از قطع" value="1">۱</label>
+        <label><input type="radio" name="A7 آمادگی پس از قطع" value="2">۲</label>
+        <label><input type="radio" name="A7 آمادگی پس از قطع" value="3">۳</label>
+        <label><input type="radio" name="A7 آمادگی پس از قطع" value="4">۴</label>
+        <label><input type="radio" name="A7 آمادگی پس از قطع" value="5">۵</label>
+      </div><div class="scaleends"><span>اصلاً آماده نیستم</span><span>کاملاً آماده‌ام</span></div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">برنامه‌ت برای آینده چیه؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="A8 برنامه آینده" value="ادامه می‌دم"><span>می‌خوام ادامه بدم، فعلاً قطع نمی‌کنم</span></label>
+        <label class="opt"><input type="radio" name="A8 برنامه آینده" value="به‌مرور قطع می‌کنم"><span>می‌خوام به مرور قطعش کنم</span></label>
+        <label class="opt"><input type="radio" name="A8 برنامه آینده" value="می‌خوام قطع کنم ولی می‌ترسم"><span>دوست دارم قطع کنم ولی می‌ترسم وزن برگرده</span></label>
+        <label class="opt"><input type="radio" name="A8 برنامه آینده" value="هنوز نمی‌دونم"><span>هنوز نمی‌دونم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+  </div>
+
+  <!-- ===== PATH B ===== -->
+  <div class="card path hidden" data-path="B">
+    <div class="secttl"><span class="dot" style="background:#9333ea"></span><h2>چند سوال درباره دوره‌ای که دارو می‌زدی</h2></div>
+
+    <div class="q" data-required="1"><div class="qlabel">کدوم دارو رو مصرف کرده بودی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="اوزمپیک"><span>اوزمپیک (Ozempic)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ویگووی"><span>ویگووی (Wegovy)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="مونجارو"><span>مونجارو (Mounjaro)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="زپ‌باند"><span>زپ‌باند (Zepbound)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ساکسندا"><span>ساکسندا (Saxenda)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ویکتوزا"><span>ویکتوزا (Victoza)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ریبلسوس"><span>ریبلسوس / قرص سماگلوتاید (Rybelsus)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ترولیسیتی"><span>ترولیسیتی (Trulicity)</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ملیتاید"><span>ملیتاید</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ماسیزا"><span>ماسیزا</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="ویکیتاید"><span>ویکیتاید</span></label>
+        <label class="opt"><input type="checkbox" name="B1 داروی مصرف‌شده" value="دقیق یادم نیست"><span>دقیق یادم نیست</span></label>
+      </div>
+      <input class="writein" type="text" name="B1 داروی دیگر" placeholder="اگه داروت تو لیست نبود، اینجا بنویس">
+      <div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چه مدت مصرف کردی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="B2 مدت مصرف" value="کمتر از یک ماه"><span>کمتر از یک ماه</span></label>
+        <label class="opt"><input type="radio" name="B2 مدت مصرف" value="۱ تا ۳ ماه"><span>۱ تا ۳ ماه</span></label>
+        <label class="opt"><input type="radio" name="B2 مدت مصرف" value="۳ تا ۶ ماه"><span>۳ تا ۶ ماه</span></label>
+        <label class="opt"><input type="radio" name="B2 مدت مصرف" value="۶ ماه تا یک سال"><span>۶ ماه تا یک سال</span></label>
+        <label class="opt"><input type="radio" name="B2 مدت مصرف" value="بیشتر از یک سال"><span>بیشتر از یک سال</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چرا قطعش کردی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="B3 دلیل قطع" value="روم اثر نکرد"><span>روم اثر نکرد</span></label>
+        <label class="opt"><input type="checkbox" name="B3 دلیل قطع" value="عوارضش اذیتم می‌کرد"><span>عوارضش اذیتم می‌کرد</span></label>
+        <label class="opt"><input type="checkbox" name="B3 دلیل قطع" value="گرون بود / نمی‌صرفید"><span>گرون بود / نمی‌صرفید</span></label>
+        <label class="opt"><input type="checkbox" name="B3 دلیل قطع" value="به وزن دلخواهم رسیدم"><span>به وزن دلخواهم رسیدم</span></label>
+        <label class="opt"><input type="checkbox" name="B3 دلیل قطع" value="دیگه گیرم نیومد"><span>دیگه گیرم نیومد</span></label>
+        <label class="opt"><input type="checkbox" name="B3 دلیل قطع" value="دکترم گفت قطع کنم"><span>دکترم گفت قطع کنم</span></label>
+      </div>
+      <input class="writein" type="text" name="B3 دلیل دیگر" placeholder="دلیل دیگه‌ای داشت؟ بنویس">
+      <div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">بعد از قطع، وزنت چی شد؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="B5 وزن بعد قطع" value="همه‌ش برگشت یا بیشتر"><span>همه‌ش برگشت یا بیشتر شد</span></label>
+        <label class="opt"><input type="radio" name="B5 وزن بعد قطع" value="بخشیش برگشت"><span>بخشیش برگشت</span></label>
+        <label class="opt"><input type="radio" name="B5 وزن بعد قطع" value="ثابت موند"><span>تقریباً ثابت موند</span></label>
+        <label class="opt"><input type="radio" name="B5 وزن بعد قطع" value="هنوز کم می‌کنم"><span>هنوز دارم کم می‌کنم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="0"><div class="qlabel">بزرگ‌ترین چالشت بعد از قطع دارو چی بوده؟</div>
+      <textarea name="B6 چالش بعد قطع" rows="2" placeholder="آزادانه بنویس…"></textarea></div>
+
+    <div class="q" data-required="0"><div class="qlabel">اگه وقتی شروع کردی، یکی مثل مربی سبک زندگی کنارت بود و حین قطع کمکت می‌کرد، چقدر همه‌چیز فرق می‌کرد؟</div>
+      <div class="scale" data-type="radio">
+        <label><input type="radio" name="B7 اثر مربی حین قطع" value="1">۱</label>
+        <label><input type="radio" name="B7 اثر مربی حین قطع" value="2">۲</label>
+        <label><input type="radio" name="B7 اثر مربی حین قطع" value="3">۳</label>
+        <label><input type="radio" name="B7 اثر مربی حین قطع" value="4">۴</label>
+        <label><input type="radio" name="B7 اثر مربی حین قطع" value="5">۵</label>
+      </div><div class="scaleends"><span>فرقی نمی‌کرد</span><span>خیلی فرق می‌کرد</span></div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">الان چقدر علاقه یا نیاز داری یکی مثل مربی سبک زندگی کمکت کنه به بدن ایده‌آلت برسی؟ <span class="star">*</span></div>
+      <div class="scale" data-type="radio">
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="1">۱</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="2">۲</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="3">۳</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="4">۴</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="5">۵</label>
+      </div><div class="scaleends"><span>کم</span><span>زیاد</span></div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q chal" data-required="1"><div class="qlabel">بزرگ‌ترین چالشت همین الان توی بحث تغذیه و وزن چیه؟ (حداکثر ۳ تا) <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox" data-max="3">
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="کنترل اشتها"><span>کنترل اشتها</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="تداوم و انگیزه"><span>تداوم و انگیزه</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="مهمونی و تعارف ایرانی"><span>مهمونی و تعارف ایرانی</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="برگشت بعد از لغزش"><span>برگشتن به مسیر بعد از لغزش</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="نگه‌داشتن وزن کم‌شده"><span>نگه‌داشتن وزن کم‌شده</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="همراهی نکردن خانواده و اطرافیان"><span>همراهی نکردن خانواده و اطرافیان</span></label>
+      </div>
+      <input class="writein" type="text" name="بزرگ‌ترین چالش دیگر" placeholder="چالش دیگه‌ای داری؟ بنویس">
+      <div class="err">حداقل یکی و حداکثر ۳ تا انتخاب کن</div></div>
+  </div>
+
+  <!-- ===== PATH C ===== -->
+  <div class="card path hidden" data-path="C">
+    <div class="secttl"><span class="dot" style="background:#d97706"></span><h2>چندتا سوال</h2></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چقدر جدی به شروع فکر می‌کنی؟ <span class="star">*</span></div>
+      <div class="scale" data-type="radio">
+        <label><input type="radio" name="C1 جدیت شروع" value="1">۱</label>
+        <label><input type="radio" name="C1 جدیت شروع" value="2">۲</label>
+        <label><input type="radio" name="C1 جدیت شروع" value="3">۳</label>
+        <label><input type="radio" name="C1 جدیت شروع" value="4">۴</label>
+        <label><input type="radio" name="C1 جدیت شروع" value="5">۵</label>
+      </div><div class="scaleends"><span>فقط یه فکر گذرا</span><span>تقریباً تصمیمم رو گرفتم</span></div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چی باعث شده بهش فکر کنی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="C2 محرک فکر" value="از روش‌های دیگه جواب نگرفتم"><span>از روش‌های دیگه جواب نگرفتم</span></label>
+        <label class="opt"><input type="checkbox" name="C2 محرک فکر" value="دیدم بقیه باهاش لاغر شدن"><span>چون دیدم بقیه باهاش لاغر شدن</span></label>
+        <label class="opt"><input type="checkbox" name="C2 محرک فکر" value="اطرافیانم توصیه می‌کنن"><span>اطرافیانم توصیه می‌کنن</span></label>
+        <label class="opt"><input type="checkbox" name="C2 محرک فکر" value="می‌خوام زودتر نتیجه بگیرم"><span>می‌خوام زودتر نتیجه بگیرم</span></label>
+        <label class="opt"><input type="checkbox" name="C2 محرک فکر" value="مشکل سلامتی مرتبط با وزن"><span>مشکل سلامتی مرتبط با وزن دارم</span></label>
+        <label class="opt"><input type="checkbox" name="C2 محرک فکر" value="تو فضای مجازی زیاد دیدم"><span>توی فضای مجازی زیاد دیدمش</span></label>
+      </div>
+      <input class="writein" type="text" name="C2 مورد دیگر" placeholder="اگه چیز دیگه‌ای هست، بنویس">
+      <div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">بزرگ‌ترین ترس یا مانعت برای شروع چیه؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="C3 ترس و مانع" value="از عوارضش می‌ترسم"><span>از عوارضش می‌ترسم</span></label>
+        <label class="opt"><input type="checkbox" name="C3 ترس و مانع" value="هزینه‌اش زیاده"><span>هزینه‌اش زیاده</span></label>
+        <label class="opt"><input type="checkbox" name="C3 ترس و مانع" value="بعد از قطع وزن برگرده"><span>اینکه بعد از قطع وزن برگرده</span></label>
+        <label class="opt"><input type="checkbox" name="C3 ترس و مانع" value="اصل و تقلبیش رو نمی‌شناسم"><span>اصل و تقلبیش رو نمی‌شناسم</span></label>
+        <label class="opt"><input type="checkbox" name="C3 ترس و مانع" value="دودلم که درسته یا نه"><span>دودلم که اصلاً درسته یا نه</span></label>
+      </div>
+      <input class="writein" type="text" name="C3 مورد دیگر" placeholder="مورد دیگه‌ای هست؟ بنویس">
+      <div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">ترجیحت کدومه؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="C4 ترجیح" value="اول خودم تغذیه‌ام رو درست کنم"><span>اول سعی کنم خودم تغذیه‌ام رو درست کنم، بعد</span></label>
+        <label class="opt"><input type="radio" name="C4 ترجیح" value="دارو و اصلاح تغذیه همزمان"><span>دارو و اصلاح تغذیه همزمان باهم</span></label>
+        <label class="opt"><input type="radio" name="C4 ترجیح" value="مستقیم سراغ دارو"><span>مستقیم برم سراغ دارو</span></label>
+        <label class="opt"><input type="radio" name="C4 ترجیح" value="هنوز نمی‌دونم"><span>هنوز نمی‌دونم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">الان چقدر علاقه یا نیاز داری یکی مثل مربی سبک زندگی کمکت کنه به بدن ایده‌آلت برسی؟ <span class="star">*</span></div>
+      <div class="scale" data-type="radio">
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="1">۱</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="2">۲</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="3">۳</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="4">۴</label>
+        <label><input type="radio" name="علاقه/نیاز به مربی" value="5">۵</label>
+      </div><div class="scaleends"><span>کم</span><span>زیاد</span></div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q chal" data-required="1"><div class="qlabel">بزرگ‌ترین چالشت همین الان توی بحث تغذیه و وزن چیه؟ (حداکثر ۳ تا) <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox" data-max="3">
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="کنترل اشتها"><span>کنترل اشتها</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="تداوم و انگیزه"><span>تداوم و انگیزه</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="مهمونی و تعارف ایرانی"><span>مهمونی و تعارف ایرانی</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="برگشت بعد از لغزش"><span>برگشتن به مسیر بعد از لغزش</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="نگه‌داشتن وزن کم‌شده"><span>نگه‌داشتن وزن کم‌شده</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="همراهی نکردن خانواده و اطرافیان"><span>همراهی نکردن خانواده و اطرافیان</span></label>
+      </div>
+      <input class="writein" type="text" name="بزرگ‌ترین چالش دیگر" placeholder="چالش دیگه‌ای داری؟ بنویس">
+      <div class="err">حداقل یکی و حداکثر ۳ تا انتخاب کن</div></div>
+  </div>
+
+  <!-- ===== PATH D ===== -->
+  <div class="card path hidden" data-path="D">
+    <div class="secttl"><span class="dot" style="background:#dc2626"></span><h2>چندتا سوال</h2></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چرا فعلاً نمی‌خوای؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="D1 دلیل نخواستن" value="از عوارضش می‌ترسم"><span>از عوارضش می‌ترسم</span></label>
+        <label class="opt"><input type="checkbox" name="D1 دلیل نخواستن" value="می‌خوام خودم به هدفم برسم"><span>می‌خوام خودم به هدفم برسم</span></label>
+        <label class="opt"><input type="checkbox" name="D1 دلیل نخواستن" value="هزینه‌اش خیلی زیاده"><span>هزینه‌اش خیلی زیاده</span></label>
+        <label class="opt"><input type="checkbox" name="D1 دلیل نخواستن" value="می‌ترسم وابسته بشم"><span>می‌ترسم وابسته بشم</span></label>
+        <label class="opt"><input type="checkbox" name="D1 دلیل نخواستن" value="به موندگاری نتیجه‌ش اعتماد ندارم"><span>به موندگاری نتیجه‌ش اعتماد ندارم</span></label>
+        <label class="opt"><input type="checkbox" name="D1 دلیل نخواستن" value="کلاً اعتقادی بهش ندارم"><span>کلاً اعتقادی بهش ندارم</span></label>
+      </div>
+      <input class="writein" type="text" name="D1 دلیل دیگر" placeholder="دلیل دیگه‌ای هست؟ بنویس">
+      <div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="0"><div class="qlabel">چی ممکنه نظرت رو عوض کنه؟</div>
+      <textarea name="D2 تغییر نظر" rows="2" placeholder="آزادانه بنویس…"></textarea></div>
+
+    <div class="q" data-required="1"><div class="qlabel">برای مدیریت وزن کدوم روش‌ها رو ترجیح می‌دی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="D3 روش ترجیحی" value="فستینگ"><span>فستینگ</span></label>
+        <label class="opt"><input type="checkbox" name="D3 روش ترجیحی" value="اصلاح سبک تغذیه"><span>اصلاح سبک تغذیه</span></label>
+        <label class="opt"><input type="checkbox" name="D3 روش ترجیحی" value="ورزش"><span>ورزش</span></label>
+        <label class="opt"><input type="checkbox" name="D3 روش ترجیحی" value="کار روی رفتار و ذهن"><span>کار روی رفتار و ذهن</span></label>
+        <label class="opt"><input type="checkbox" name="D3 روش ترجیحی" value="یه دوره خوب و همراهی گروهی"><span>یه دوره خوب و همراهی گروهی</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چقدر به یه دوره کاهش وزن با روش اصلاح سبک زندگی (و بدون دارو) علاقه داری؟ <span class="star">*</span></div>
+      <div class="scale" data-type="radio">
+        <label><input type="radio" name="D4 علاقه به دوره بدون دارو" value="1">۱</label>
+        <label><input type="radio" name="D4 علاقه به دوره بدون دارو" value="2">۲</label>
+        <label><input type="radio" name="D4 علاقه به دوره بدون دارو" value="3">۳</label>
+        <label><input type="radio" name="D4 علاقه به دوره بدون دارو" value="4">۴</label>
+        <label><input type="radio" name="D4 علاقه به دوره بدون دارو" value="5">۵</label>
+      </div><div class="scaleends"><span>کم</span><span>زیاد</span></div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q chal" data-required="1"><div class="qlabel">بزرگ‌ترین چالشت همین الان توی بحث تغذیه و وزن چیه؟ (حداکثر ۳ تا) <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox" data-max="3">
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="کنترل اشتها"><span>کنترل اشتها</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="تداوم و انگیزه"><span>تداوم و انگیزه</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="مهمونی و تعارف ایرانی"><span>مهمونی و تعارف ایرانی</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="برگشت بعد از لغزش"><span>برگشتن به مسیر بعد از لغزش</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="نگه‌داشتن وزن کم‌شده"><span>نگه‌داشتن وزن کم‌شده</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="همراهی نکردن خانواده و اطرافیان"><span>همراهی نکردن خانواده و اطرافیان</span></label>
+      </div>
+      <input class="writein" type="text" name="بزرگ‌ترین چالش دیگر" placeholder="چالش دیگه‌ای داری؟ بنویس">
+      <div class="err">حداقل یکی و حداکثر ۳ تا انتخاب کن</div></div>
+  </div>
+
+  <!-- ===== PATH E ===== -->
+  <div class="card path hidden" data-path="E">
+    <div class="secttl"><span class="dot" style="background:#0891b2"></span><h2>چند سوال درباره مسیر خودت</h2></div>
+
+    <div class="q" data-required="1"><div class="qlabel">الان برای مدیریت وزن و غذات چیکار می‌کنی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox">
+        <label class="opt"><input type="checkbox" name="E1 کار فعلی" value="کالری‌شماری می‌کنم"><span>کالری‌شماری می‌کنم</span></label>
+        <label class="opt"><input type="checkbox" name="E1 کار فعلی" value="فستینگ می‌کنم"><span>فستینگ می‌کنم</span></label>
+        <label class="opt"><input type="checkbox" name="E1 کار فعلی" value="ورزش می‌کنم"><span>ورزش می‌کنم</span></label>
+        <label class="opt"><input type="checkbox" name="E1 کار فعلی" value="کار خاصی نمی‌کنم"><span>کار خاصی نمی‌کنم</span></label>
+      </div>
+      <input class="writein" type="text" name="E1 مورد دیگر" placeholder="کار دیگه‌ای می‌کنی؟ بنویس">
+      <div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">چقدر به یه دوره گروهی و یه مربی برای اصلاح سبک زندگیت که قدم‌به‌قدم همراهیت کنه علاقه داری؟ <span class="star">*</span></div>
+      <div class="scale" data-type="radio">
+        <label><input type="radio" name="E3 علاقه به دوره گروهی" value="1">۱</label>
+        <label><input type="radio" name="E3 علاقه به دوره گروهی" value="2">۲</label>
+        <label><input type="radio" name="E3 علاقه به دوره گروهی" value="3">۳</label>
+        <label><input type="radio" name="E3 علاقه به دوره گروهی" value="4">۴</label>
+        <label><input type="radio" name="E3 علاقه به دوره گروهی" value="5">۵</label>
+      </div><div class="scaleends"><span>کم</span><span>زیاد</span></div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q chal" data-required="1"><div class="qlabel">بزرگ‌ترین چالشت همین الان توی بحث تغذیه و وزن چیه؟ (حداکثر ۳ تا) <span class="star">*</span></div>
+      <div class="opts" data-type="checkbox" data-max="3">
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="کنترل اشتها"><span>کنترل اشتها</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="تداوم و انگیزه"><span>تداوم و انگیزه</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="مهمونی و تعارف ایرانی"><span>مهمونی و تعارف ایرانی</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="برگشت بعد از لغزش"><span>برگشتن به مسیر بعد از لغزش</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="نگه‌داشتن وزن کم‌شده"><span>نگه‌داشتن وزن کم‌شده</span></label>
+        <label class="opt"><input type="checkbox" name="بزرگ‌ترین چالش" value="همراهی نکردن خانواده و اطرافیان"><span>همراهی نکردن خانواده و اطرافیان</span></label>
+      </div>
+      <input class="writein" type="text" name="بزرگ‌ترین چالش دیگر" placeholder="چالش دیگه‌ای داری؟ بنویس">
+      <div class="err">حداقل یکی و حداکثر ۳ تا انتخاب کن</div></div>
+  </div>
+
+  <!-- ===== FINAL (common) ===== -->
+  <div class="card">
+    <div class="secttl"><span class="dot" style="background:var(--brand)"></span><h2>بخش آخر</h2></div>
+
+    <!-- pricing — only shown when location != Iran -->
+    <div class="q hidden" id="f5" data-required="1"><div class="qlabel">فکر کن یه دوره ۸ هفته‌ای هست که یه مربی به‌صورت آنلاین به تو و یه گروه کوچک کمک می‌کنه به وزن ایده‌آلت برسی و کلاً سبک زندگیت رو اصلاح کنی. اگه واقعاً مؤثر و کمک‌کننده باشه، چقدر حاضری برای همچین دوره‌ای هزینه کنی؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="هزینه (دلاری)" value="زیر ۵۰۰ دلار"><span>زیر ۵۰۰ دلار</span></label>
+        <label class="opt"><input type="radio" name="هزینه (دلاری)" value="۵۰۰ تا ۸۰۰ دلار"><span>۵۰۰ تا ۸۰۰ دلار</span></label>
+        <label class="opt"><input type="radio" name="هزینه (دلاری)" value="۸۰۰ تا ۱۲۰۰ دلار"><span>۸۰۰ تا ۱۲۰۰ دلار</span></label>
+        <label class="opt"><input type="radio" name="هزینه (دلاری)" value="بالای ۱۲۰۰ دلار"><span>بالای ۱۲۰۰ دلار</span></label>
+        <label class="opt"><input type="radio" name="هزینه (دلاری)" value="اصلاً علاقه‌ای به دوره ندارم"><span>اصلاً علاقه‌ای به دوره ندارم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="0"><div class="qlabel">حرف آخر؟ هرچی دوست داری درباره وزن، اشتها، این داروها یا دوره‌ای که آرزو داری وجود داشته باشه برام بنویس</div>
+      <textarea name="حرف آخر" rows="3" placeholder="آزادانه بنویس…"></textarea></div>
+  </div>
+
+  <button type="submit" class="submit" id="submitBtn">ارسال جواب‌ها 🌿</button>
+  <p class="note">جواب‌های تو محرمانه است و فقط برای طراحی دوره استفاده می‌شود.</p>
+  </form>
+
+  <div id="thanks" class="card thanks hidden">
+    <h2>خیلی ممنونم بابت وقتی که گذاشتی 🙏</h2>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   تنظیمات — این یک خط را عوض کن:
+   آدرس Web App گوگل‌اسکریپت خودت را داخل گیومه بگذار
+   (چیزی شبیه: https://script.google.com/macros/s/AKfyc.../exec)
+   اگر خالی بماند، فرم جواب‌ها را به‌صورت فایل برای تست ذخیره می‌کند.
+   ============================================================ */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbys6VD0fUT2nFgb5Uk6A4kvkKoBQfVhmFPXavUupDpHrLqaUkJttwX2Qf58gIS2r8TB/exec";
+
+(function(){
+  var form = document.getElementById('survey');
+
+  form.addEventListener('change', function(e){
+    var inp = e.target;
+    if(inp.type==='radio' || inp.type==='checkbox'){
+      var lab = inp.closest('label');
+      if(inp.type==='radio'){
+        form.querySelectorAll('input[name="'+CSS.escape(inp.name)+'"]').forEach(function(g){ var l=g.closest('label'); if(l) l.classList.remove('checked'); });
+      }
+      if(lab) lab.classList.toggle('checked', inp.checked);
+    }
+    var q = inp.closest('.q'); if(q) q.classList.remove('invalid');
+    updateBar();
+  });
+
+  // branching by Q-KEY
+  document.getElementById('qkey').addEventListener('change', function(e){
+    var path = e.target.getAttribute('data-path');
+    document.querySelectorAll('.card.path').forEach(function(sec){
+      var on = sec.getAttribute('data-path')===path;
+      sec.classList.toggle('hidden', !on);
+      sec.querySelectorAll('input,textarea').forEach(function(i){ i.disabled = !on; });
+    });
+    updateBar();
+  });
+
+  // dollar pricing gating by location
+  document.getElementById('loc').addEventListener('change', function(e){
+    var outside = e.target.value !== 'ایران';
+    var f5 = document.getElementById('f5');
+    f5.classList.toggle('hidden', !outside);
+    f5.querySelectorAll('input').forEach(function(i){ i.disabled = !outside; });
+    updateBar();
+  });
+
+  // max selection groups
+  form.querySelectorAll('.opts[data-max]').forEach(function(grp){
+    var max = parseInt(grp.getAttribute('data-max'),10);
+    grp.addEventListener('change', function(ev){
+      if(grp.querySelectorAll('input:checked').length>max){
+        ev.target.checked=false; var l=ev.target.closest('label'); if(l) l.classList.remove('checked');
+      }
+    });
+  });
+
+  // disable hidden inputs at start
+  document.querySelectorAll('.card.path').forEach(function(sec){
+    sec.querySelectorAll('input,textarea').forEach(function(i){ i.disabled = true; });
+  });
+  document.getElementById('f5').querySelectorAll('input').forEach(function(i){ i.disabled = true; });
+
+  function visibleRequired(){
+    return Array.prototype.filter.call(form.querySelectorAll('.q[data-required="1"]'), function(q){ return q.offsetParent !== null; });
+  }
+  function answered(q){
+    var ok = false;
+    q.querySelectorAll('input,textarea').forEach(function(i){
+      if(i.disabled) return;
+      if(i.type==='radio'||i.type==='checkbox'){ if(i.checked) ok=true; }
+      else if(i.value.trim()!=='') ok=true;
+    });
+    return ok;
+  }
+  function updateBar(){
+    var list = visibleRequired(), total=list.length, done=list.filter(answered).length;
+    document.getElementById('bar').style.width = (total? Math.round(done/total*100):0)+'%';
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var bad=[];
+    visibleRequired().forEach(function(q){ if(!answered(q)){ q.classList.add('invalid'); bad.push(q);} else q.classList.remove('invalid'); });
+    var fe=document.getElementById('formerr');
+    if(bad.length){ fe.style.display='block'; bad[0].scrollIntoView({behavior:'smooth',block:'center'}); return; }
+    fe.style.display='none'; send();
+  });
+
+  function collect(){
+    var data={};
+    form.querySelectorAll('input,textarea').forEach(function(i){
+      if(i.disabled) return;
+      if((i.type==='radio'||i.type==='checkbox') && !i.checked) return;
+      if(i.type==='checkbox'){ (data[i.name]=data[i.name]||[]).push(i.value); }
+      else if(i.type==='radio'){ data[i.name]=i.value; }
+      else if(i.value.trim()!==''){ data[i.name]=i.value.trim(); }
+    });
+    Object.keys(data).forEach(function(k){ if(Array.isArray(data[k])) data[k]=data[k].join(' | '); });
+    return data;
+  }
+
+  function finish(){
+    form.classList.add('hidden');
+    document.getElementById('submitBtn').classList.add('hidden');
+    document.getElementById('hero').classList.add('hidden');
+    document.getElementById('topbar').classList.add('hidden');
+    var nt=document.querySelector('.note'); if(nt) nt.classList.add('hidden');
+    document.getElementById('thanks').classList.remove('hidden');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function send(){
+    var btn=document.getElementById('submitBtn'); btn.disabled=true; btn.textContent='در حال ارسال…';
+    var data=collect();
+    if(ENDPOINT){
+      // text/plain جلوی preflight CORS گوگل‌اسکریپت رو می‌گیره؛ no-cors یعنی پاسخ رو نمی‌خونیم و موفق فرض می‌کنیم
+      fetch(ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)})
+        .then(function(){ finish(); })
+        .catch(function(){ btn.disabled=false; btn.textContent='ارسال جواب‌ها 🌿'; var fe=document.getElementById('formerr'); fe.textContent='ارسال نشد. اتصالت رو چک کن و دوباره بزن.'; fe.style.display='block'; });
+    } else {
+      var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+      var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='fastlife-response-'+Date.now()+'.json'; a.click();
+      finish();
+    }
+  }
+
+  updateBar();
+})();
+</script>
+</body>
+</html>
