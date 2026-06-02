@@ -187,7 +187,7 @@
       </div>
       <input class="writein" type="text" name="A5 عارضه دیگر" placeholder="عارضهٔ دیگه‌ای داشتی؟ بنویس"></div>
 
-    <div class="q" data-required="1"><div class="qlabel">نگران کدوم‌ها هستی؟ <span class="star">*</span></div>
+    <div class="q" data-required="1"><div class="qlabel">در حال حاضر که دارو می‌زنی نگران کدوم‌ها هستی؟ <span class="star">*</span></div>
       <div class="opts" data-type="checkbox">
         <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="برگشت وزن بعد قطع"><span>برگشت وزن بعد از قطع دارو</span></label>
         <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="از دست دادن عضله یا شل شدن بدن و صورت"><span>از دست دادن عضله یا شل شدن بدن و صورت</span></label>
@@ -199,14 +199,22 @@
         <label class="opt"><input type="checkbox" name="A6 نگرانی‌ها" value="راضی‌ام و نگرانی خاصی ندارم"><span>راضی‌ام و نگرانی خاصی ندارم</span></label>
       </div><div class="err">این سوال اجباریه</div></div>
 
-    <div class="q" data-required="1"><div class="qlabel">اگه فردا مجبور شی دارو رو قطع کنی، چقدر آماده‌ای وزنت رو حفظ کنی؟ <span class="star">*</span></div>
+    <div class="q" data-required="1"><div class="qlabel">می‌دونی این دارو دقیقاً چطور باعث کم شدن اشتهات می‌شه؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="A.مکانیسم" value="کامل می‌دونم"><span>آره، کامل می‌دونم چطور کار می‌کنه</span></label>
+        <label class="opt"><input type="radio" name="A.مکانیسم" value="ذهنیت کلی دارم"><span>یه ذهنیت کلی دارم ولی دقیق نه</span></label>
+        <label class="opt"><input type="radio" name="A.مکانیسم" value="فقط می‌دونم اشتها رو کم می‌کنه"><span>نه، فقط می‌دونم اشتهامو کم می‌کنه</span></label>
+        <label class="opt"><input type="radio" name="A.مکانیسم" value="بهش فکر نکردم"><span>اصلاً بهش فکر نکردم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
+
+    <div class="q" data-required="1"><div class="qlabel">آیا ترس اینو داری که بعد از قطع دارو همه‌چی به حالت قبل برگرده؟ <span class="star">*</span></div>
       <div class="scale" data-type="radio">
-        <label><input type="radio" name="A7 آمادگی پس از قطع" value="1">۱</label>
-        <label><input type="radio" name="A7 آمادگی پس از قطع" value="2">۲</label>
-        <label><input type="radio" name="A7 آمادگی پس از قطع" value="3">۳</label>
-        <label><input type="radio" name="A7 آمادگی پس از قطع" value="4">۴</label>
-        <label><input type="radio" name="A7 آمادگی پس از قطع" value="5">۵</label>
-      </div><div class="scaleends"><span>اصلاً آماده نیستم</span><span>کاملاً آماده‌ام</span></div><div class="err">این سوال اجباریه</div></div>
+        <label><input type="radio" name="A.ترس از قطع" value="1">۱</label>
+        <label><input type="radio" name="A.ترس از قطع" value="2">۲</label>
+        <label><input type="radio" name="A.ترس از قطع" value="3">۳</label>
+        <label><input type="radio" name="A.ترس از قطع" value="4">۴</label>
+        <label><input type="radio" name="A.ترس از قطع" value="5">۵</label>
+      </div><div class="scaleends"><span>اصلاً</span><span>خیلی</span></div><div class="err">این سوال اجباریه</div></div>
 
     <div class="q" data-required="1"><div class="qlabel">برنامه‌ت برای آینده چیه؟ <span class="star">*</span></div>
       <div class="opts" data-type="radio">
@@ -268,19 +276,24 @@
         <label class="opt"><input type="radio" name="B5 وزن بعد قطع" value="هنوز کم می‌کنم"><span>هنوز دارم کم می‌کنم</span></label>
       </div><div class="err">این سوال اجباریه</div></div>
 
-    <div class="q" data-required="0"><div class="qlabel">بزرگ‌ترین چالشت بعد از قطع دارو چی بوده؟</div>
-      <textarea name="B6 چالش بعد قطع" rows="2" placeholder="آزادانه بنویس…"></textarea></div>
+    <div class="q" data-required="1"><div class="qlabel">وقتی دارو رو قطع کردی، می‌دونستی چطور باید اشتها و وزنت رو نگه داری؟ <span class="star">*</span></div>
+      <div class="opts" data-type="radio">
+        <label class="opt"><input type="radio" name="B.آگاهی هنگام قطع" value="آره برنامه داشتم"><span>آره، برنامه داشتم</span></label>
+        <label class="opt"><input type="radio" name="B.آگاهی هنگام قطع" value="یه چیزایی می‌دونستم"><span>یه چیزایی می‌دونستم</span></label>
+        <label class="opt"><input type="radio" name="B.آگاهی هنگام قطع" value="نه اصلاً رها شدم"><span>نه، اصلاً رها شدم</span></label>
+      </div><div class="err">این سوال اجباریه</div></div>
 
-    <div class="q" data-required="0"><div class="qlabel">اگه وقتی شروع کردی، یکی مثل مربی سبک زندگی کنارت بود و حین قطع کمکت می‌کرد، چقدر همه‌چیز فرق می‌کرد؟</div>
+    <div class="q" data-required="1"><div class="qlabel">اگه اون موقع یه مربی خوب کنارت بود که یادت می‌داد چطور بعد از قطع ادامه بدی، فکر می‌کنی نتیجه فرق می‌کرد؟ <span class="star">*</span></div>
       <div class="scale" data-type="radio">
-        <label><input type="radio" name="B7 اثر مربی حین قطع" value="1">۱</label>
-        <label><input type="radio" name="B7 اثر مربی حین قطع" value="2">۲</label>
-        <label><input type="radio" name="B7 اثر مربی حین قطع" value="3">۳</label>
-        <label><input type="radio" name="B7 اثر مربی حین قطع" value="4">۴</label>
-        <label><input type="radio" name="B7 اثر مربی حین قطع" value="5">۵</label>
-      </div><div class="scaleends"><span>فرقی نمی‌کرد</span><span>خیلی فرق می‌کرد</span></div></div>
+        <label><input type="radio" name="B.اثر دوره بعد قطع" value="1">۱</label>
+        <label><input type="radio" name="B.اثر دوره بعد قطع" value="2">۲</label>
+        <label><input type="radio" name="B.اثر دوره بعد قطع" value="3">۳</label>
+        <label><input type="radio" name="B.اثر دوره بعد قطع" value="4">۴</label>
+        <label><input type="radio" name="B.اثر دوره بعد قطع" value="5">۵</label>
+      </div><div class="scaleends"><span>فرقی نمی‌کرد</span><span>خیلی فرق می‌کرد</span></div><div class="err">این سوال اجباریه</div></div>
 
-    <div class="q" data-required="1"><div class="qlabel">الان چقدر علاقه یا نیاز داری یکی مثل مربی سبک زندگی کمکت کنه به بدن ایده‌آلت برسی؟ <span class="star">*</span></div>
+
+    <div class="q" data-required="1"><div class="qlabel">الان چقدر علاقه یا نیاز داری یکی مثل «مربی سبک زندگی» کمکت کنه اینبار بدون دارو به بدن ایده‌آلت برسی؟ <span class="star">*</span></div>
       <div class="scale" data-type="radio">
         <label><input type="radio" name="علاقه/نیاز به مربی" value="1">۱</label>
         <label><input type="radio" name="علاقه/نیاز به مربی" value="2">۲</label>
@@ -459,7 +472,7 @@
     <div class="secttl"><span class="dot" style="background:var(--brand)"></span><h2>بخش آخر</h2></div>
 
     <!-- pricing — only shown when location != Iran -->
-    <div class="q hidden" id="f5" data-required="1"><div class="qlabel">فکر کن یه دوره ۸ هفته‌ای هست که یه مربی به‌صورت آنلاین به تو و یه گروه کوچک کمک می‌کنه به وزن ایده‌آلت برسی و کلاً سبک زندگیت رو اصلاح کنی. اگه واقعاً مؤثر و کمک‌کننده باشه، چقدر حاضری برای همچین دوره‌ای هزینه کنی؟ <span class="star">*</span></div>
+    <div class="q hidden" id="f5" data-required="1"><div class="qlabel"><span id="priceText">فکر کن یه دوره ۸ هفته‌ای هست که یه مربی به‌صورت آنلاین به تو و یه گروه کوچک کمک می‌کنه به وزن ایده‌آلت برسی و کلاً سبک زندگیت رو اصلاح کنی. اگه واقعاً مؤثر و کمک‌کننده باشه، چقدر حاضری برای همچین دوره‌ای هزینه کنی؟</span> <span class="star">*</span></div>
       <div class="opts" data-type="radio">
         <label class="opt"><input type="radio" name="هزینه (دلاری)" value="زیر ۵۰۰ دلار"><span>زیر ۵۰۰ دلار</span></label>
         <label class="opt"><input type="radio" name="هزینه (دلاری)" value="۵۰۰ تا ۸۰۰ دلار"><span>۵۰۰ تا ۸۰۰ دلار</span></label>
@@ -506,6 +519,13 @@ var ENDPOINT = "https://script.google.com/macros/s/AKfycbys6VD0fUT2nFgb5Uk6A4kvk
     updateBar();
   });
 
+  // متن سوال قیمت بسته به مسیر فرق می‌کنه
+  var PRICE_TEXT = {
+    A: "یه گروه کوچک رو تصور کن، که همه مثل خودت دارن از این دارو استفاده می‌کنن و دغدغه‌هاتون شبیه همه، و یه مربی که طی چند هفته به‌صورت آنلاین بهتون کمک می‌کنه برای دوران قطع دارو آماده شین تا وزن برنگرده. تو چقدر حاضری برای چنین دوره‌ای هزینه کنی؟ حضورت توی گروه همیشگی خواهد بود و می‌تونین بعد از قطع هم، برای مدتی از مربی مشاوره و کمک بگیرین",
+    B: "یه گروه کوچک رو تصور کن، که همه مثل خودت قبلاً از این دارو استفاده کردن و وزنشون برگشته، و یه مربی که طی چند هفته به‌صورت آنلاین بهتون کمک می‌کنه اینبار بدون دارو سبک تغذیه و زندگیتون رو عوض کنین. تو چقدر حاضری برای چنین دوره‌ای هزینه کنی؟ حضورت توی گروه همیشگی خواهد بود و می‌تونین بعد از دوره هم، برای مدتی از مربی مشاوره و کمک بگیرین",
+    DEFAULT: "فکر کن یه دوره ۸ هفته‌ای هست که یه مربی به‌صورت آنلاین به تو و یه گروه کوچک کمک می‌کنه به وزن ایده‌آلت برسی و کلاً سبک زندگیت رو اصلاح کنی. اگه واقعاً مؤثر و کمک‌کننده باشه، چقدر حاضری برای همچین دوره‌ای هزینه کنی؟"
+  };
+
   // branching by Q-KEY
   document.getElementById('qkey').addEventListener('change', function(e){
     var path = e.target.getAttribute('data-path');
@@ -514,6 +534,8 @@ var ENDPOINT = "https://script.google.com/macros/s/AKfycbys6VD0fUT2nFgb5Uk6A4kvk
       sec.classList.toggle('hidden', !on);
       sec.querySelectorAll('input,textarea').forEach(function(i){ i.disabled = !on; });
     });
+    var pt = document.getElementById('priceText');
+    if(pt) pt.textContent = PRICE_TEXT[path] || PRICE_TEXT.DEFAULT;
     updateBar();
   });
 
